@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>급식 API 테스트</title>
+    <style>
+        body { font-family: monospace; padding: 20px; background: #1a1a1a; color: #fff; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+        pre { background: #2a2a2a; padding: 15px; border-radius: 5px; overflow-x: auto; }
+        .success { color: #4ade80; }
+        .error { color: #f87171; }
+    </style>
+</head>
+<body>
+    <h1>급식 API 직접 테스트</h1>
+
+    <div>
+        <button onclick="testDate('20241125')">2024-11-25 테스트</button>
+        <button onclick="testDate('20241126')">2024-11-26 테스트</button>
+        <button onclick="testDate('20241127')">2024-11-27 테스트</button>
+        <button onclick="testDate('20240101')">2024-01-01 테스트</button>
+        <button onclick="testDate('20231201')">2023-12-01 테스트</button>
+    </div>
+
+    <h2>결과:</h2>
+    <div id="result"></div>
+
+    <script>
+        async function testDate(date) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `<p>⏳ ${date} 날짜 테스트 중...</p>`;
+
+            try {
+                const url = `https://api.xn--rh3b.net/${date}`;
+                console.log('Testing URL:', url);
+
+                const response = await fetch(url);
+                const status = response.status;
+
+                resultDiv.innerHTML = `
+                    <h3 class="${response.ok ? 'success' : 'error'}">
+                        ${date} - HTTP ${status} ${response.statusText}
+                    </h3>
+                `;
+
+                if (response.ok) {
+                    const data = await response.json();
+                    resultDiv.innerHTML += `
+                        <pre class="success">${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                } else {
+                    const text = await response.text();
+                    resultDiv.innerHTML += `
+                        <pre class="error">${text || '(no response body)'}</pre>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <h3 class="error">❌ 에러 발생</h3>
+                    <pre class="error">${error.message}</pre>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

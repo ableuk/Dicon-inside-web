@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+@theme {
+  --animate-fade-in-up: fadeInUp 0.6s ease-out forwards;
+  --shadow-3xl: 0 35px 60px -15px rgba(0, 0, 0, 0.5);
+
+  /* Figma 디자인 시스템 색상 */
+  --color-dicon-orange-50: #FFEBB5;
+  --color-dicon-orange-100: #FFE5A1;
+  --color-dicon-orange-200: #FFD87A;
+  --color-dicon-orange-300: #FFCB52;
+  --color-dicon-orange-400: #FFBD2B;
+  --color-dicon-orange-500: #FFA100;
+  --color-dicon-orange-600: #C77C00;
+  --color-dicon-orange-700: #8F5900;
+  --color-dicon-orange-800: #573600;
+  --color-dicon-orange-900: #1F1300;
+  --color-dicon-orange: #FFA100;
+
+  --color-dicon-accent: #FF8000;
+  --color-dicon-accent-light: #FFA100;
+  --color-dicon-accent-dark: #FF4400;
+
+  --color-dicon-yellow: #FFE100;
+  --color-dicon-peach: #FFB673;
+  --color-dicon-brown: #4B2C00;
+  --color-dicon-brown-light: #6B3F00;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+/* 스크롤바 스타일링 */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.5);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.8);
+}

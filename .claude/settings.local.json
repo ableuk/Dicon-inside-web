@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__github__search_repositories",
+      "mcp__filesystem__directory_tree",
+      "mcp__filesystem__list_directory",
+      "mcp__context7__resolve-library-id",
+      "mcp__context7__get-library-docs",
+      "WebSearch",
+      "Bash(find:*)",
+      "mcp__filesystem__read_text_file",
+      "mcp__filesystem__write_file",
+      "Bash(npx tsc:*)",
+      "mcp__supabase__list_projects",
+      "Bash(cat:*)",
+      "mcp__supabase__execute_sql",
+      "mcp__supabase__apply_migration",
+      "Bash(npm run dev)",
+      "Bash(npm install:*)",
+      "mcp__figma__add_figma_file",
+      "Bash(mcp list-tools:*)",
+      "Bash(mcp inspect:*)",
+      "WebFetch(domain:www.figma.com)",
+      "mcp__figma__view_node",
+      "Bash(copy \"c:\\Users\\김진욱\\OneDrive\\바탕 화면\\호랑에듀\\logo_dicon_inside.png\" \"C:\\project\\dcinside-web\\public\\logo.png\")"
+    ]
+  },
+  "mcpServers": {
+    "filesystem": {
+      "command": "C:\\Users\\김진욱\\AppData\\Roaming\\npm\\node_modules\\@modelcontextprotocol\\server-filesystem\\dist\\index.js",
+      "args": [
+        "C:\\project"
+      ]
+    }
+  }
+}
