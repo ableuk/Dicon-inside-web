@@ -1,11 +1,13 @@
 import { createClient } from '@supabase/supabase-js';
 
 // Supabase 설정
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 if (!supabaseUrl || !supabaseAnonKey) {
-  console.warn('Supabase credentials are missing. Please configure environment variables.');
+  const error = 'Supabase credentials are missing. Please configure VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY environment variables.';
+  console.error(error);
+  throw new Error(error);
 }
 
 // Supabase 클라이언트 생성 (캐시 최적화 설정)

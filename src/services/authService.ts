@@ -25,18 +25,37 @@ const DEFAULT_RETRY_CONFIG: RetryConfig = {
  * Google OAuth를 통한 로그인
  */
 export const signInWithGoogle = async () => {
-  const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: 'google',
-    options: {
-      redirectTo: `${window.location.origin}/auth/callback`,
-    },
-  });
+  try {
+    // Validate environment
+    if (!window?.location?.origin) {
+      throw new Error('브라우저 환경을 확인할 수 없습니다. 페이지를 새로고침해주세요.');
+    }
 
-  if (error) {
-    throw new Error(`Google 로그인 실패: ${error.message}`);
+    const redirectTo = `${window.location.origin}/auth/callback`;
+    console.log('[signInWithGoogle] Redirect URL:', redirectTo);
+
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo,
+        queryParams: {
+          access_type: 'offline',
+          prompt: 'consent',
+        },
+      },
+    });
+
+    if (error) {
+      console.error('[signInWithGoogle] OAuth 오류:', error);
+      throw new Error(`Google 로그인 실패: ${error.message}`);
+    }
+
+    console.log('[signInWithGoogle] OAuth 리다이렉트 준비 완료');
+    return data;
+  } catch (error) {
+    console.error('[signInWithGoogle] 예외 발생:', error);
+    throw error;
   }
-
-  return data;
 };
 
 /**

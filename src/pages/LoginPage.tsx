@@ -9,10 +9,29 @@ export default function LoginPage() {
     try {
       setIsLoading(true);
       setError(null);
+
+      console.log('[LoginPage] Google 로그인 시작');
       await signInWithGoogle();
       // OAuth 리다이렉트가 발생하므로 여기서는 navigate 불필요
     } catch (err) {
-      setError(err instanceof Error ? err.message : '로그인에 실패했습니다.');
+      console.error('[LoginPage] 로그인 오류:', err);
+
+      let errorMessage = '로그인에 실패했습니다.';
+
+      if (err instanceof Error) {
+        errorMessage = err.message;
+
+        // 네트워크 오류 감지
+        if (err.message.includes('Failed to fetch') || err.message.includes('NetworkError')) {
+          errorMessage = '네트워크 연결을 확인해주세요. 인터넷 연결이 불안정하거나 서버에 접근할 수 없습니다.';
+        }
+        // 환경변수 오류 감지
+        else if (err.message.includes('credentials') || err.message.includes('environment')) {
+          errorMessage = '서버 설정 오류입니다. 관리자에게 문의해주세요.';
+        }
+      }
+
+      setError(errorMessage);
       setIsLoading(false);
     }
   };
