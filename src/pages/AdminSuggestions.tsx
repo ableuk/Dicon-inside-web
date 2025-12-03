@@ -132,7 +132,7 @@ const AdminSuggestions = () => {
       <BackgroundBlur />
       <Sidebar />
 
-      <main className="ml-[300px] p-6 min-h-screen">
+      <main className="ml-[340px] p-6 min-h-screen">
         <div className="max-w-7xl mx-auto space-y-6">
           {/* 헤더 */}
           <div className="mb-8">

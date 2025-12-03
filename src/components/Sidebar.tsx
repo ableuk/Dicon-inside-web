@@ -22,11 +22,11 @@ export default function Sidebar() {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <aside className="fixed left-0 top-0 h-screen w-[300px] bg-white/80 backdrop-blur-md border-r border-[#FFE1B6] p-8 flex flex-col gap-16 z-10">
+    <aside className="fixed left-6 top-6 h-[calc(100vh-48px)] w-[300px] bg-white/80 backdrop-blur-md rounded-3xl shadow-xl p-8 flex flex-col gap-16 z-10">
       {/* 로고 및 사용자 정보 */}
-      <div className="flex flex-col items-center gap-3">
+      <div className="flex flex-col items-start gap-3">
         {/* 로고 */}
-        <Link to="/meals" className="w-full flex justify-center">
+        <Link to="/meals" className="w-full flex justify-start">
           <img
             src="/logo.png"
             alt="DICON INSIDE"
@@ -36,7 +36,7 @@ export default function Sidebar() {
 
         {/* 사용자 이름 */}
         {user && (
-          <div className="flex items-center gap-5 mt-3">
+          <div className="flex items-center gap-3 mt-1">
             <span className="text-2xl font-extrabold text-black">
               {user.name || user.email?.split('@')[0]}
             </span>

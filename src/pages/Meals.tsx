@@ -8,7 +8,7 @@ interface MealType {
   id: 'breakfast' | 'lunch' | 'dinner';
   label: string;
   icon: string;
-  iconComponent: JSX.Element;
+  iconComponent: React.ReactElement;
 }
 
 const Meals = () => {
@@ -22,7 +22,7 @@ const Meals = () => {
       label: '아침',
       icon: 'wb_twilight',
       iconComponent: (
-        <span className="material-symbols-outlined text-[28px] text-[#FFB673]">wb_twilight</span>
+        <span className="material-symbols-outlined text-[40px] text-[#FFB673]">wb_twilight</span>
       ),
     },
     {
@@ -30,7 +30,7 @@ const Meals = () => {
       label: '점심',
       icon: 'wb_sunny',
       iconComponent: (
-        <span className="material-symbols-outlined text-[28px] text-[#FFE100]">wb_sunny</span>
+        <span className="material-symbols-outlined text-[40px] text-[#FFE100]">wb_sunny</span>
       ),
     },
     {
@@ -38,7 +38,7 @@ const Meals = () => {
       label: '저녁',
       icon: 'bedtime',
       iconComponent: (
-        <span className="material-symbols-outlined text-[28px] text-[#C4A56E]">bedtime</span>
+        <span className="material-symbols-outlined text-[40px] text-[#C4A56E]">bedtime</span>
       ),
     },
   ];
@@ -97,13 +97,13 @@ const Meals = () => {
       <Sidebar />
 
       {/* 메인 콘텐츠 */}
-      <main className="ml-[300px] p-6 min-h-screen">
-        <div className="max-w-[1060px] mx-auto space-y-3">
+      <main className="ml-[340px] p-6 pr-6 h-screen flex flex-col">
+        <div className="w-full h-full flex flex-col gap-3">
           {/* 날짜 헤더 */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 flex-shrink-0">
             {/* 날짜 표시 */}
-            <div className="flex-1 bg-white/80 backdrop-blur-md border border-[#FFE1B6] rounded-[20px] px-6 py-6 text-center">
-              <span className="text-2xl font-semibold text-black">
+            <div className="flex-1 bg-white/80 backdrop-blur-md border border-[#FFE1B6] rounded-[20px] px-6 py-8 text-center">
+              <span className="text-4xl font-semibold text-black">
                 {formatDateDisplay(selectedDate)}
               </span>
             </div>
@@ -111,47 +111,40 @@ const Meals = () => {
             {/* 이전 버튼 */}
             <button
               onClick={() => changeDate(-1)}
-              className="w-20 h-20 bg-white/80 backdrop-blur-md border border-[#FFE1B6] rounded-[20px] flex items-center justify-center hover:bg-white/90 transition-colors"
+              className="w-24 h-24 bg-white/80 backdrop-blur-md border border-[#FFE1B6] rounded-[20px] flex items-center justify-center hover:bg-white/90 transition-colors"
             >
-              <span className="material-symbols-outlined text-[32px] text-black/50">chevron_left</span>
+              <span className="material-symbols-outlined text-[40px] text-black/50">chevron_left</span>
             </button>
 
             {/* 다음 버튼 */}
             <button
               onClick={() => changeDate(1)}
-              className="w-20 h-20 bg-white/80 backdrop-blur-md border border-[#FFE1B6] rounded-[20px] flex items-center justify-center hover:bg-white/90 transition-colors"
+              className="w-24 h-24 bg-white/80 backdrop-blur-md border border-[#FFE1B6] rounded-[20px] flex items-center justify-center hover:bg-white/90 transition-colors"
             >
-              <span className="material-symbols-outlined text-[32px] text-black/50">chevron_right</span>
+              <span className="material-symbols-outlined text-[40px] text-black/50">chevron_right</span>
             </button>
           </div>
 
           {/* 급식 카드 그리드 */}
           {loading ? (
-            <div className="flex items-center justify-center py-32">
-              <div className="animate-spin h-12 w-12 border-4 border-dicon-orange border-t-transparent rounded-full"></div>
+            <div className="flex-1 flex items-center justify-center">
+              <div className="animate-spin h-16 w-16 border-4 border-dicon-orange border-t-transparent rounded-full"></div>
             </div>
           ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
-              {mealTypes.map((mealType, mealIndex) => {
+            <div className="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-3">
+              {mealTypes.map((mealType) => {
                 const items = mealData?.[mealType.id] || [];
                 const hasItems = items.length > 0;
-
-                // 각 카드마다 다른 배경색 적용
-                const cardBackgrounds = [
-                  'bg-gradient-to-br from-[#FFE5CC]/90 to-[#FFEEDD]/90',
-                  'bg-gradient-to-br from-[#FFF5CC]/90 to-[#FFFFDD]/90',
-                  'bg-gradient-to-br from-[#FFF0DD]/90 to-[#FFF8EE]/90',
-                ];
 
                 return (
                   <div
                     key={mealType.id}
-                    className={`${cardBackgrounds[mealIndex]} backdrop-blur-md border border-[#FFE1B6]/50 rounded-[24px] overflow-hidden shadow-sm`}
+                    className="bg-white/80 backdrop-blur-md border border-[#FFE1B6]/50 rounded-[24px] overflow-hidden shadow-sm flex flex-col"
                   >
                     {/* 카드 헤더 */}
-                    <div className="px-6 py-6">
-                      <div className="flex items-center gap-2">
-                        <h3 className="text-[24px] font-bold text-black">
+                    <div className="px-8 py-8">
+                      <div className="flex items-center gap-3">
+                        <h3 className="text-[32px] font-bold text-black">
                           {mealType.label}
                         </h3>
                         {mealType.iconComponent}
@@ -159,22 +152,22 @@ const Meals = () => {
                     </div>
 
                     {/* 메뉴 리스트 */}
-                    <div className="px-6 pb-6 space-y-1">
+                    <div className="px-8 pb-8 space-y-2 flex-1">
                       {hasItems ? (
                         items.map((item, index) => (
                           <div
                             key={index}
-                            className="flex items-start gap-2 py-1"
+                            className="flex items-start gap-3 py-2"
                           >
-                            <span className="text-black/60 mt-1 text-sm">•</span>
-                            <span className="text-base font-medium text-black flex-1 leading-relaxed">
+                            <span className="text-black/60 mt-1 text-lg">•</span>
+                            <span className="text-xl font-medium text-black flex-1 leading-relaxed">
                               {item}
                             </span>
                           </div>
                         ))
                       ) : (
-                        <div className="py-8 text-center">
-                          <p className="text-gray-500 text-sm">급식 정보가 없습니다</p>
+                        <div className="flex-1 flex items-center justify-center">
+                          <p className="text-gray-500 text-lg">급식 정보가 없습니다</p>
                         </div>
                       )}
                     </div>

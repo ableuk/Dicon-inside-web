@@ -109,7 +109,7 @@ const StudentSuggestions = () => {
       <div className="min-h-screen relative">
         <BackgroundBlur />
         <Sidebar />
-        <main className="ml-[300px] p-6 min-h-screen flex items-center justify-center">
+        <main className="ml-[340px] p-6 min-h-screen flex items-center justify-center">
           <div className="bg-white/80 backdrop-blur-md border border-[#FFE1B6] rounded-2xl p-12 text-center">
             <p className="text-gray-600">로그인이 필요합니다.</p>
           </div>
@@ -123,7 +123,7 @@ const StudentSuggestions = () => {
       <BackgroundBlur />
       <Sidebar />
 
-      <main className="ml-[300px] p-6 min-h-screen">
+      <main className="ml-[340px] p-6 min-h-screen">
         <div className="max-w-5xl mx-auto space-y-6">
           {/* 헤더 */}
           <div className="mb-8">

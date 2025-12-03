@@ -114,7 +114,7 @@ const Seats = () => {
       <BackgroundBlur />
       <Sidebar />
 
-      <main className="ml-[300px] p-6 min-h-screen">
+      <main className="ml-[340px] p-6 min-h-screen">
         <div className="max-w-6xl mx-auto space-y-6">
           {/* 제목 */}
           <div className="text-center mb-8">
