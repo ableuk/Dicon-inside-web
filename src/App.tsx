@@ -18,8 +18,8 @@ function App() {
       <AuthProvider>
         <Routes>
           {/* 공개 라우트 */}
-          <Route path="/login" element={<LoginPage />} />
           <Route path="/auth/callback" element={<AuthCallbackPage />} />
+          <Route path="/login" element={<LoginPage />} />
 
           {/* 보호된 라우트 */}
           <Route
