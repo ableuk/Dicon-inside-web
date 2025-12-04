@@ -22,7 +22,7 @@ export default function Sidebar() {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <aside className="fixed left-6 top-6 h-[calc(100vh-48px)] w-[300px] bg-white/80 backdrop-blur-md rounded-3xl shadow-xl p-8 flex flex-col gap-16 z-10">
+    <aside className="hidden md:flex fixed left-6 top-6 h-[calc(100vh-48px)] w-[300px] bg-white/80 backdrop-blur-md rounded-3xl shadow-xl p-8 flex-col gap-16 z-10">
       {/* 로고 및 사용자 정보 */}
       <div className="flex flex-col items-start gap-3">
         {/* 로고 */}

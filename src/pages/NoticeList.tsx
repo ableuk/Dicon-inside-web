@@ -4,6 +4,7 @@ import type { Notice } from '@/types';
 import { getNotices } from '@/services/noticeService';
 import { useAuth } from '@/contexts/AuthContext';
 import Sidebar from '@/components/Sidebar';
+import BottomNav from '@/components/BottomNav';
 import BackgroundBlur from '@/components/BackgroundBlur';
 
 const NoticeList = () => {
@@ -48,19 +49,20 @@ const NoticeList = () => {
     <div className="min-h-screen relative">
       <BackgroundBlur />
       <Sidebar />
+      <BottomNav />
 
-      <main className="ml-[340px] p-6 min-h-screen">
+      <main className="md:ml-[340px] p-4 md:p-6 min-h-screen pb-20 md:pb-6">
         <div className="max-w-5xl mx-auto space-y-6">
           {/* 헤더 */}
-          <div className="flex justify-between items-center mb-8">
+          <div className="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-4 md:mb-8">
             <div>
-              <h1 className="text-4xl font-extrabold text-black mb-2">공지 사항</h1>
-              <p className="text-gray-600">중요한 공지사항을 확인하세요</p>
+              <h1 className="text-2xl md:text-4xl font-extrabold text-black mb-2">공지 사항</h1>
+              <p className="text-sm md:text-base text-gray-600">중요한 공지사항을 확인하세요</p>
             </div>
             {isAdmin && (
               <Link
                 to="/notices/new"
-                className="bg-dicon-orange hover:bg-dicon-orange/90 text-white px-6 py-3 rounded-lg font-bold transition-colors"
+                className="bg-dicon-orange hover:bg-dicon-orange/90 text-white px-4 md:px-6 py-2 md:py-3 rounded-lg text-sm md:text-base font-bold transition-colors text-center"
               >
                 + 공지사항 작성
               </Link>
@@ -69,12 +71,12 @@ const NoticeList = () => {
 
           {/* 로딩 */}
           {loading ? (
-            <div className="bg-white/80 backdrop-blur-md border border-[#FFE1B6] rounded-2xl p-12 text-center">
+            <div className="bg-white/80 backdrop-blur-md border border-[#FFE1B6] rounded-2xl p-8 md:p-12 text-center">
               <div className="animate-spin h-12 w-12 border-4 border-dicon-orange border-t-transparent rounded-full mx-auto"></div>
-              <p className="text-gray-600 mt-4">로딩 중...</p>
+              <p className="text-sm md:text-base text-gray-600 mt-4">로딩 중...</p>
             </div>
           ) : (
-            <div className="bg-white/80 backdrop-blur-md border border-[#FFE1B6] rounded-2xl p-8">
+            <div className="bg-white/80 backdrop-blur-md border border-[#FFE1B6] rounded-2xl p-5 md:p-8">
               {notices.length === 0 ? (
                 <div className="py-12 text-center">
                   <div className="text-6xl mb-4">📢</div>

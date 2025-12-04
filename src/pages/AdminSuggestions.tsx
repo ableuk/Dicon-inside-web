@@ -8,6 +8,7 @@ import {
   searchSuggestions
 } from '@/services/suggestionService';
 import Sidebar from '@/components/Sidebar';
+import BottomNav from '@/components/BottomNav';
 import BackgroundBlur from '@/components/BackgroundBlur';
 
 const AdminSuggestions = () => {
@@ -131,13 +132,14 @@ const AdminSuggestions = () => {
     <div className="min-h-screen relative">
       <BackgroundBlur />
       <Sidebar />
+      <BottomNav />
 
-      <main className="ml-[340px] p-6 min-h-screen">
+      <main className="md:ml-[340px] p-4 md:p-6 min-h-screen pb-20 md:pb-6">
         <div className="max-w-7xl mx-auto space-y-6">
           {/* 헤더 */}
-          <div className="mb-8">
-            <h1 className="text-4xl font-extrabold text-black mb-2">건의사항 관리</h1>
-            <p className="text-gray-600">학생들의 건의사항을 확인하고 답변하세요</p>
+          <div className="mb-4 md:mb-8">
+            <h1 className="text-2xl md:text-4xl font-extrabold text-black mb-2">건의사항 관리</h1>
+            <p className="text-sm md:text-base text-gray-600">학생들의 건의사항을 확인하고 답변하세요</p>
           </div>
 
           {/* 통계 */}

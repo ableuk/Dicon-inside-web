@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import html2canvas from 'html2canvas';
 import { useAuth } from '@/contexts/AuthContext';
 import Sidebar from '@/components/Sidebar';
+import BottomNav from '@/components/BottomNav';
 import BackgroundBlur from '@/components/BackgroundBlur';
 
 interface SeatingConfig {
@@ -113,26 +114,27 @@ const Seats = () => {
     <div className="min-h-screen relative">
       <BackgroundBlur />
       <Sidebar />
+      <BottomNav />
 
-      <main className="ml-[340px] p-6 min-h-screen">
+      <main className="md:ml-[340px] p-4 md:p-6 min-h-screen pb-20 md:pb-6">
         <div className="max-w-6xl mx-auto space-y-6">
           {/* 제목 */}
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-extrabold text-black mb-2">자리 배치</h1>
-            <p className="text-gray-600">학생들의 자리를 랜덤으로 배치해보세요</p>
+          <div className="text-center mb-4 md:mb-8">
+            <h1 className="text-2xl md:text-4xl font-extrabold text-black mb-2">자리 배치</h1>
+            <p className="text-sm md:text-base text-gray-600">학생들의 자리를 랜덤으로 배치해보세요</p>
           </div>
 
           {/* 설정 카드 */}
-          <div className="bg-white/80 backdrop-blur-md border border-[#FFE1B6] rounded-2xl p-8">
+          <div className="bg-white/80 backdrop-blur-md border border-[#FFE1B6] rounded-2xl p-5 md:p-8">
             {!isAdmin && (
-              <div className="bg-yellow-100 border border-yellow-400 rounded-lg p-4 mb-6">
-                <p className="text-yellow-800 font-medium">
+              <div className="bg-yellow-100 border border-yellow-400 rounded-lg p-3 md:p-4 mb-4 md:mb-6">
+                <p className="text-yellow-800 font-medium text-sm md:text-base">
                   ⚠️ 자리 배치 변경은 관리자만 가능합니다.
                 </p>
               </div>
             )}
 
-            <h2 className="text-2xl font-bold text-black mb-6">배치 설정</h2>
+            <h2 className="text-xl md:text-2xl font-bold text-black mb-4 md:mb-6">배치 설정</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* 행 수 입력 */}
@@ -188,11 +190,11 @@ const Seats = () => {
             </div>
 
             {/* 버튼들 */}
-            <div className="mt-6 flex flex-wrap gap-3">
+            <div className="mt-4 md:mt-6 flex flex-wrap gap-2 md:gap-3">
               <button
                 onClick={generateSeating}
                 disabled={!isAdmin}
-                className={`px-6 py-3 bg-dicon-orange hover:bg-dicon-orange/90 text-white font-bold rounded-lg transition-colors ${!isAdmin ? 'opacity-50 cursor-not-allowed' : ''}`}
+                className={`px-4 md:px-6 py-2 md:py-3 bg-dicon-orange hover:bg-dicon-orange/90 text-white text-sm md:text-base font-bold rounded-lg transition-colors ${!isAdmin ? 'opacity-50 cursor-not-allowed' : ''}`}
               >
                 {isGenerated ? '새로 배치하기' : '랜덤 배치'}
               </button>
@@ -202,14 +204,14 @@ const Seats = () => {
                   <button
                     onClick={reshuffle}
                     disabled={!isAdmin}
-                    className={`px-6 py-3 bg-dicon-accent hover:bg-dicon-accent/90 text-white font-bold rounded-lg transition-colors ${!isAdmin ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    className={`px-4 md:px-6 py-2 md:py-3 bg-dicon-accent hover:bg-dicon-accent/90 text-white text-sm md:text-base font-bold rounded-lg transition-colors ${!isAdmin ? 'opacity-50 cursor-not-allowed' : ''}`}
                   >
                     다시 섞기
                   </button>
 
                   <button
                     onClick={saveAsImage}
-                    className="px-6 py-3 bg-purple-500 hover:bg-purple-600 text-white font-bold rounded-lg transition-colors"
+                    className="px-4 md:px-6 py-2 md:py-3 bg-purple-500 hover:bg-purple-600 text-white text-sm md:text-base font-bold rounded-lg transition-colors"
                   >
                     이미지로 저장
                   </button>
@@ -217,7 +219,7 @@ const Seats = () => {
                   <button
                     onClick={reset}
                     disabled={!isAdmin}
-                    className={`px-6 py-3 bg-red-500 hover:bg-red-600 text-white font-bold rounded-lg transition-colors ${!isAdmin ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    className={`px-4 md:px-6 py-2 md:py-3 bg-red-500 hover:bg-red-600 text-white text-sm md:text-base font-bold rounded-lg transition-colors ${!isAdmin ? 'opacity-50 cursor-not-allowed' : ''}`}
                   >
                     초기화
                   </button>

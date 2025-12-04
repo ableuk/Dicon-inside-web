@@ -3,6 +3,7 @@ import type { Suggestion, SuggestionCategory } from '@/types';
 import { createSuggestion, getUserSuggestions } from '@/services/suggestionService';
 import { useAuth } from '@/contexts/AuthContext';
 import Sidebar from '@/components/Sidebar';
+import BottomNav from '@/components/BottomNav';
 import BackgroundBlur from '@/components/BackgroundBlur';
 
 const StudentSuggestions = () => {
@@ -109,9 +110,10 @@ const StudentSuggestions = () => {
       <div className="min-h-screen relative">
         <BackgroundBlur />
         <Sidebar />
-        <main className="ml-[340px] p-6 min-h-screen flex items-center justify-center">
-          <div className="bg-white/80 backdrop-blur-md border border-[#FFE1B6] rounded-2xl p-12 text-center">
-            <p className="text-gray-600">로그인이 필요합니다.</p>
+        <BottomNav />
+        <main className="md:ml-[340px] p-4 md:p-6 min-h-screen flex items-center justify-center pb-20 md:pb-6">
+          <div className="bg-white/80 backdrop-blur-md border border-[#FFE1B6] rounded-2xl p-8 md:p-12 text-center">
+            <p className="text-sm md:text-base text-gray-600">로그인이 필요합니다.</p>
           </div>
         </main>
       </div>
@@ -122,13 +124,14 @@ const StudentSuggestions = () => {
     <div className="min-h-screen relative">
       <BackgroundBlur />
       <Sidebar />
+      <BottomNav />
 
-      <main className="ml-[340px] p-6 min-h-screen">
+      <main className="md:ml-[340px] p-4 md:p-6 min-h-screen pb-20 md:pb-6">
         <div className="max-w-5xl mx-auto space-y-6">
           {/* 헤더 */}
-          <div className="mb-8">
-            <h1 className="text-4xl font-extrabold text-black mb-2">건의 사항</h1>
-            <p className="text-gray-600">
+          <div className="mb-4 md:mb-8">
+            <h1 className="text-2xl md:text-4xl font-extrabold text-black mb-2">건의 사항</h1>
+            <p className="text-sm md:text-base text-gray-600">
               자유롭게 의견을 남겨주세요. 모든 건의사항은 익명으로 처리됩니다.
             </p>
           </div>
