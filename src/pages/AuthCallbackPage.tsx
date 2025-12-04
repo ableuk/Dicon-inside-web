@@ -9,19 +9,57 @@ export default function AuthCallbackPage() {
   useEffect(() => {
     const handleCallback = async () => {
       try {
-        // 세션 확인만 수행 (프로필 생성은 AuthContext에서 자동 처리)
+        console.log('[AuthCallbackPage] OAuth 콜백 처리 시작');
+        console.log('[AuthCallbackPage] URL:', window.location.href);
+
+        // URL에서 해시 프래그먼트 확인
+        const hashParams = new URLSearchParams(window.location.hash.substring(1));
+        const accessToken = hashParams.get('access_token');
+        const refreshToken = hashParams.get('refresh_token');
+
+        console.log('[AuthCallbackPage] Access token 존재:', !!accessToken);
+        console.log('[AuthCallbackPage] Refresh token 존재:', !!refreshToken);
+
+        // Supabase가 자동으로 세션 처리하도록 대기
+        // (hash fragment의 토큰을 자동으로 처리함)
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        // 세션 확인
         const { data, error } = await supabase.auth.getSession();
 
         if (error) {
+          console.error('[AuthCallbackPage] getSession 오류:', error);
           throw error;
         }
 
+        console.log('[AuthCallbackPage] 세션 데이터:', data.session ? '존재함' : '없음');
+
         if (data.session?.user) {
-          console.log('[AuthCallbackPage] 인증 성공, 홈으로 이동');
+          console.log('[AuthCallbackPage] 인증 성공, 사용자 ID:', data.session.user.id);
           // 홈으로 리다이렉트 (프로필 생성은 AuthContext의 getCurrentUser에서 자동 처리)
           navigate('/', { replace: true });
         } else {
-          throw new Error('인증 정보를 찾을 수 없습니다.');
+          // 토큰은 있지만 세션이 없는 경우, 토큰으로 세션 설정 시도
+          if (accessToken && refreshToken) {
+            console.log('[AuthCallbackPage] 토큰으로 세션 설정 시도');
+            const { data: sessionData, error: sessionError } = await supabase.auth.setSession({
+              access_token: accessToken,
+              refresh_token: refreshToken,
+            });
+
+            if (sessionError) {
+              console.error('[AuthCallbackPage] setSession 오류:', sessionError);
+              throw sessionError;
+            }
+
+            if (sessionData.session) {
+              console.log('[AuthCallbackPage] 세션 설정 성공');
+              navigate('/', { replace: true });
+              return;
+            }
+          }
+
+          throw new Error('인증 정보를 찾을 수 없습니다. Supabase 설정을 확인해주세요.');
         }
       } catch (err) {
         console.error('[AuthCallbackPage] 인증 콜백 처리 오류:', err);
