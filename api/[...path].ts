@@ -13,16 +13,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return;
   }
 
-  // path 파라미터에서 실제 API 경로 추출
-  const { path } = req.query;
-  const apiPath = Array.isArray(path) ? path.join('/') : path || '';
+  // URL에서 직접 경로 추출 (더 안정적)
+  const url = req.url || '';
+  const apiPath = url.replace(/^\/api\/?/, ''); // /api/ 또는 /api 제거
 
   // 급식 API URL 구성
   const targetUrl = `https://api.xn--rh3b.net/${apiPath}`;
 
   console.log('[Proxy] 요청 받음:', {
     method: req.method,
-    path: apiPath,
+    originalUrl: req.url,
+    extractedPath: apiPath,
     targetUrl,
     query: req.query,
   });
