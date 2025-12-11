@@ -3,10 +3,10 @@ import { handleMealError, handleMealResponse } from './mealServiceHelpers';
 
 // xn--rh3b.net = 밥.net (Punycode)
 // 개발 환경: Vite 프록시 사용 (/api -> https://api.xn--rh3b.net)
-// 프로덕션: 직접 API 호출
-const API_BASE_URL = import.meta.env.DEV ? '/api' : 'https://api.xn--rh3b.net';
+// 프로덕션: Vercel Serverless Function 프록시 사용 (/api -> Vercel Function -> https://api.xn--rh3b.net)
+const API_BASE_URL = '/api';
 console.log('[급식 API] Base URL:', API_BASE_URL);
-console.log('[급식 API] 환경:', import.meta.env.DEV ? '개발(프록시)' : '프로덕션(직접)');
+console.log('[급식 API] 환경:', import.meta.env.DEV ? '개발(Vite 프록시)' : '프로덕션(Vercel 프록시)');
 console.log('[급식 API] 실제 API:', 'https://api.xn--rh3b.net (밥.net의 Punycode)');
 
 // 날짜 형식 변환: YYYYMMDD -> YYYY-MM-DD

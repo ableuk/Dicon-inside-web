@@ -22,7 +22,9 @@
       "Bash(mcp inspect:*)",
       "WebFetch(domain:www.figma.com)",
       "mcp__figma__view_node",
-      "Bash(copy \"c:\\Users\\김진욱\\OneDrive\\바탕 화면\\호랑에듀\\logo_dicon_inside.png\" \"C:\\project\\dcinside-web\\public\\logo.png\")"
+      "Bash(copy \"c:\\Users\\김진욱\\OneDrive\\바탕 화면\\호랑에듀\\logo_dicon_inside.png\" \"C:\\project\\dcinside-web\\public\\logo.png\")",
+      "Bash(git add:*)",
+      "Bash(mkdir:*)"
     ]
   },
   "mcpServers": {
