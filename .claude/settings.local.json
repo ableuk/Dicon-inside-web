@@ -24,7 +24,12 @@
       "mcp__figma__view_node",
       "Bash(copy \"c:\\Users\\김진욱\\OneDrive\\바탕 화면\\호랑에듀\\logo_dicon_inside.png\" \"C:\\project\\dcinside-web\\public\\logo.png\")",
       "Bash(git add:*)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nFix meal API CORS issue with Vercel serverless proxy\n\n프로덕션 환경에서 급식 API CORS 에러를 해결하기 위해 Vercel Serverless Function 프록시를 추가했습니다.\n\n변경사항:\n- api/[...path].ts: 급식 API를 프록시하는 Vercel serverless function 추가\n- vercel.json: /api 경로를 serverless function으로 라우팅하도록 설정\n- mealService.ts: 프로덕션에서도 /api 경로 사용하도록 수정 (Vercel 프록시 활용)\n- @vercel/node 패키지 설치\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git push:*)",
+      "Bash(npm run build:*)",
+      "Bash(grep:*)",
+      "Bash(git commit:*)"
     ]
   },
   "mcpServers": {
