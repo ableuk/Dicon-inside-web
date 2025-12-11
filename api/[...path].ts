@@ -20,22 +20,37 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   // 급식 API URL 구성
   const targetUrl = `https://api.xn--rh3b.net/${apiPath}`;
 
+  console.log('[Proxy] 요청 받음:', {
+    method: req.method,
+    path: apiPath,
+    targetUrl,
+    query: req.query,
+  });
+
   try {
     // 요청 메서드에 따라 처리
     const response = await fetch(targetUrl, {
       method: req.method,
       headers: {
-        'Content-Type': 'application/json',
+        'Accept': 'application/json',
       },
+    });
+
+    console.log('[Proxy] 응답 받음:', {
+      status: response.status,
+      statusText: response.statusText,
+      contentType: response.headers.get('content-type'),
     });
 
     // 응답이 JSON이 아닐 수 있으므로 먼저 확인
     const contentType = response.headers.get('content-type');
     if (contentType && contentType.includes('application/json')) {
       const data = await response.json();
+      console.log('[Proxy] JSON 데이터:', data);
       res.status(response.status).json(data);
     } else {
       const text = await response.text();
+      console.log('[Proxy] 텍스트 응답:', text.substring(0, 200));
       res.status(response.status).send(text);
     }
   } catch (error) {
@@ -44,6 +59,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       success: false,
       message: 'Proxy error occurred',
       error: error instanceof Error ? error.message : 'Unknown error',
+      targetUrl,
     });
   }
 }
