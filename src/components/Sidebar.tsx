@@ -17,6 +17,7 @@ export default function Sidebar() {
     { id: 'notices', label: '공지 사항', icon: 'campaign', path: '/notices' },
     { id: 'suggestions', label: '건의 사항', icon: 'forum', path: '/suggestions' },
     { id: 'seats', label: '자리 배치', icon: 'grid_view', path: '/seats' },
+    { id: 'random', label: '랜덤 뽑기', icon: 'casino', path: '/random' },
   ];
 
   const isActive = (path: string) => location.pathname === path;

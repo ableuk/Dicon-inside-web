@@ -42,6 +42,13 @@ const Home = () => {
       link: '/suggestions',
       gradient: 'from-orange-500 to-orange-600',
     },
+    {
+      title: '랜덤 뽑기',
+      description: '번호를 랜덤으로 뽑아보세요',
+      icon: '🎲',
+      link: '/random',
+      gradient: 'from-pink-500 to-pink-600',
+    },
   ];
 
   // Admin-only features

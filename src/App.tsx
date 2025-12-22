@@ -3,6 +3,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
 import Seats from './pages/Seats';
+import RandomPicker from './pages/RandomPicker';
 import Meals from './pages/Meals';
 import NoticeList from './pages/NoticeList';
 import NoticeDetail from './pages/NoticeDetail';
@@ -43,6 +44,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Seats />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/random"
+            element={
+              <ProtectedRoute>
+                <RandomPicker />
               </ProtectedRoute>
             }
           />

@@ -15,6 +15,7 @@ export default function BottomNav() {
     { id: 'notices', label: '공지', icon: 'campaign', path: '/notices' },
     { id: 'suggestions', label: '건의', icon: 'forum', path: '/suggestions' },
     { id: 'seats', label: '자리', icon: 'grid_view', path: '/seats' },
+    { id: 'random', label: '랜덤', icon: 'casino', path: '/random' },
   ];
 
   const isActive = (path: string) => location.pathname === path;

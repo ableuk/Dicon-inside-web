@@ -55,3 +55,21 @@ export interface User {
   role: 'student' | 'admin';
   created_at: Date;
 }
+
+export interface RandomPickerConfig {
+  pickCount: number;      // 뽑을 개수
+  minRange: number;       // 최소값
+  maxRange: number;       // 최대값
+}
+
+export interface RandomPickerResult {
+  id: string;            // 타임스탬프 기반 ID
+  config: RandomPickerConfig;
+  picks: number[];       // 뽑힌 숫자 배열 (정렬됨)
+  generatedAt: Date;
+}
+
+export interface RandomPickerHistory {
+  results: RandomPickerResult[];
+  maxHistorySize: number; // 기본값: 10
+}
