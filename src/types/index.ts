@@ -60,6 +60,7 @@ export interface RandomPickerConfig {
   pickCount: number;      // 뽑을 개수
   minRange: number;       // 최소값
   maxRange: number;       // 최대값
+  excludedNumbers?: number[]; // 제외할 숫자들
 }
 
 export interface RandomPickerResult {

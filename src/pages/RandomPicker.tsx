@@ -10,6 +10,7 @@ const RandomPicker = () => {
   const [pickCount, setPickCount] = useState<number>(5);
   const [minRange, setMinRange] = useState<number>(1);
   const [maxRange, setMaxRange] = useState<number>(30);
+  const [excludedNumbers, setExcludedNumbers] = useState<number[]>([]);
   const [currentResult, setCurrentResult] = useState<RandomPickerResult | null>(null);
   const [validationError, setValidationError] = useState<string | null>(null);
   const [copySuccess, setCopySuccess] = useState<boolean>(false);
@@ -39,6 +40,7 @@ const RandomPicker = () => {
           setPickCount(latest.config.pickCount);
           setMinRange(latest.config.minRange);
           setMaxRange(latest.config.maxRange);
+          setExcludedNumbers(latest.config.excludedNumbers || []);
         }
       } catch (error) {
         console.error('Failed to load random picker history:', error);
@@ -46,23 +48,40 @@ const RandomPicker = () => {
     }
   }, []);
 
+  // 제외 숫자 토글
+  const toggleExcludedNumber = (num: number) => {
+    setExcludedNumbers((prev) =>
+      prev.includes(num) ? prev.filter((n) => n !== num) : [...prev, num]
+    );
+  };
+
+  // 범위가 변경되면 범위 밖의 제외 숫자 제거
+  useEffect(() => {
+    setExcludedNumbers((prev) =>
+      prev.filter((num) => num >= minRange && num <= maxRange)
+    );
+  }, [minRange, maxRange]);
+
   // 입력 유효성 검사
   const validateConfig = (config: RandomPickerConfig): string | null => {
     if (config.pickCount < 1) return '뽑을 개수는 1 이상이어야 합니다';
     if (config.minRange >= config.maxRange) return '최소값은 최대값보다 작아야 합니다';
-    const available = config.maxRange - config.minRange + 1;
+    const total = config.maxRange - config.minRange + 1;
+    const excluded = config.excludedNumbers?.length || 0;
+    const available = total - excluded;
+    if (available <= 0) return '제외된 숫자가 너무 많습니다';
     if (config.pickCount > available)
-      return `범위 내에서 ${available}개까지만 뽑을 수 있습니다`;
+      return `제외된 숫자를 제외하고 ${available}개까지만 뽑을 수 있습니다`;
     return null;
   };
 
   // 랜덤 숫자 생성 (중복 없음)
   const generateRandomNumbers = (config: RandomPickerConfig): number[] => {
-    const { pickCount, minRange, maxRange } = config;
+    const { pickCount, minRange, maxRange, excludedNumbers = [] } = config;
     const available = Array.from(
       { length: maxRange - minRange + 1 },
       (_, i) => minRange + i
-    );
+    ).filter((num) => !excludedNumbers.includes(num));
     const shuffled = shuffleArray(available);
     return shuffled.slice(0, pickCount).sort((a, b) => a - b);
   };
@@ -88,7 +107,12 @@ const RandomPicker = () => {
 
   // 랜덤 뽑기 실행
   const handleGenerate = () => {
-    const config: RandomPickerConfig = { pickCount, minRange, maxRange };
+    const config: RandomPickerConfig = {
+      pickCount,
+      minRange,
+      maxRange,
+      excludedNumbers: excludedNumbers.length > 0 ? excludedNumbers : undefined,
+    };
     const error = validateConfig(config);
 
     if (error) {
@@ -128,6 +152,7 @@ const RandomPicker = () => {
   const reset = () => {
     setCurrentResult(null);
     setValidationError(null);
+    setExcludedNumbers([]);
   };
 
   // 시간 포맷팅
@@ -204,6 +229,58 @@ const RandomPicker = () => {
               </div>
             </div>
 
+            {/* 제외할 숫자 선택 */}
+            {maxRange - minRange + 1 <= 100 && (
+              <div className="mt-6">
+                <div className="flex items-center justify-between mb-3">
+                  <label className="block text-gray-700 font-semibold">
+                    제외할 숫자 선택 (선택사항)
+                  </label>
+                  {excludedNumbers.length > 0 && (
+                    <button
+                      onClick={() => setExcludedNumbers([])}
+                      className="text-sm text-red-500 hover:text-red-600 font-medium"
+                    >
+                      모두 해제
+                    </button>
+                  )}
+                </div>
+                <div className="grid grid-cols-5 md:grid-cols-10 gap-2 max-h-60 overflow-y-auto p-3 bg-gray-50 rounded-lg">
+                  {Array.from({ length: maxRange - minRange + 1 }, (_, i) => minRange + i).map(
+                    (num) => (
+                      <button
+                        key={num}
+                        onClick={() => toggleExcludedNumber(num)}
+                        className={`
+                          aspect-square rounded-lg font-semibold text-sm transition-all
+                          ${
+                            excludedNumbers.includes(num)
+                              ? 'bg-red-500 text-white shadow-md'
+                              : 'bg-white border-2 border-gray-300 text-gray-700 hover:border-dicon-orange'
+                          }
+                        `}
+                      >
+                        {num}
+                      </button>
+                    )
+                  )}
+                </div>
+                {excludedNumbers.length > 0 && (
+                  <p className="text-sm text-gray-600 mt-2">
+                    제외된 숫자: {excludedNumbers.sort((a, b) => a - b).join(', ')}
+                  </p>
+                )}
+              </div>
+            )}
+
+            {maxRange - minRange + 1 > 100 && (
+              <div className="mt-6 p-3 bg-blue-50 border border-blue-300 rounded-lg">
+                <p className="text-blue-700 text-sm">
+                  범위가 너무 큽니다. 제외 기능은 범위가 100 이하일 때만 사용할 수 있습니다.
+                </p>
+              </div>
+            )}
+
             {/* 유효성 검사 에러 메시지 */}
             {validationError && (
               <div className="mt-4 p-3 bg-red-50 border border-red-300 rounded-lg">
@@ -274,6 +351,16 @@ const RandomPicker = () => {
                     </p>
                   </div>
                 </div>
+
+                {/* 제외된 숫자 표시 */}
+                {currentResult.config.excludedNumbers && currentResult.config.excludedNumbers.length > 0 && (
+                  <div className="mb-4 md:mb-6 p-3 bg-red-50 border border-red-200 rounded-lg">
+                    <p className="text-sm text-gray-700 mb-1 font-semibold">제외된 숫자:</p>
+                    <p className="text-sm text-red-700">
+                      {currentResult.config.excludedNumbers.sort((a, b) => a - b).join(', ')}
+                    </p>
+                  </div>
+                )}
 
                 {/* 액션 버튼들 */}
                 <div className="flex flex-wrap gap-2 md:gap-3">
